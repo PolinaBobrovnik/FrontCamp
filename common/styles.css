@@ -1,44 +1,12 @@
 
-/*
-====================================================
-
-* 	[Master Stylesheet]
-	
-	Theme Name :  
-	Version    :  
-	Author     :  
-	Author URI : 
-
-====================================================
-
-	TOC
-	
-	1. PRIMARY STYLES
-	2. COMMONS FOR PAGE DESIGN
-	3. HEADER
-	4. INTRO SECTION
-	5. PORFOLIO SECTION
-	6. ABOUT SECTION
-	7. EXPERIENCE SECTION
-	8. EDUCATION SECTION
-	9. COUNTER SECTION
-	10. FOOTER
-
-====================================================
-
-
-/* ---------------------------------
-1. PRIMARY STYLES
---------------------------------- */
-
 html{ font-size: 100%; overflow-x: hidden; width: 100%; margin: 0px;  padding: 0px; touch-action: manipulation; }
 
 
 body{ font-size: 14px; font-family: 'Encode Sans Expanded', sans-serif; width: 100%; height: 100%; margin: 0; font-weight: 400;
 	-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; word-wrap: break-word; 
-	overflow-x: hidden; color: #333; }
+	overflow-x: hidden; color: #333; min-height: 500px;}
 
-h1, h2, h3, h4, h5, h6, p, a, ul, span, li, img, inpot, button{ margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6, p, a, ul, span, li, img, input, button{ margin: 0; padding: 0; }
 
 h1,h2,h3,h4,h5,h6{ line-height: 1.5; font-weight: inherit; }
 
@@ -53,17 +21,65 @@ h4{ font-size: 1.3em; }
 h5{ font-size: 1.1em; }
 h6{ font-size: .85em; }
 
+.hvr-sweep-to-top {
+	display: inline-block;
+	vertical-align: middle;
+	-webkit-transform: perspective(1px) translateZ(0);
+	transform: perspective(1px) translateZ(0);
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+	position: relative;
+	-webkit-transition-property: color;
+	transition-property: color;
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+  }
+  .hvr-sweep-to-top:before {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(124, 91, 0, 0.486);
+	-webkit-transform: scaleY(0);
+	transform: scaleY(0);
+	-webkit-transform-origin: 50% 100%;
+	transform-origin: 50% 100%;
+	-webkit-transition-property: transform;
+	transition-property: transform;
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+	-webkit-transition-timing-function: ease-out;
+	transition-timing-function: ease-out;
+  }
+  .hvr-sweep-to-top:hover, .hvr-sweep-to-top:focus, .hvr-sweep-to-top:active {
+	color: white;
+  }
+  .hvr-sweep-to-top:hover:before, .hvr-sweep-to-top:focus:before, .hvr-sweep-to-top:active:before {
+	-webkit-transform: scaleY(1);
+	transform: scaleY(1);
+  }
+
+.yellow {
+	color: #F9B500;
+}
+
 .autosuggest {
 	position: absolute;
-	background: pink;
-	height: 200px;
-	bottom: -200px;
-	padding: 10px 20px;
+	background: #f7f5f8;
+	max-height: 400px;
+    bottom: -400px;
+    padding: 10px 30px;
 	z-index: 2;
 	overflow: auto;
 }
-.autosuggest.hidden {
+.autosuggest.hidden, .center.hidden {
 	visibility: hidden;
+}
+
+.autosuggest-item, .autosuggest-item-noclick {
+	line-height: 40px;
 }
 
 .toggle {
@@ -151,6 +167,11 @@ h6{ font-size: .85em; }
     justify-content: flex-end;
 }
 
+.container {
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
 
 a, button{ display: inline-block; text-decoration: none; color: inherit; line-height: 1.3; 
 	-webkit-transition: all .25s ease-in-out; transition: all .25s ease-in-out; }
@@ -158,7 +179,7 @@ a, button{ display: inline-block; text-decoration: none; color: inherit; line-he
 a:focus, a:active, a:hover,
 button:focus, button:active, button:hover,
 a b.light-color:hover,
-.main-menu li:hover { text-decoration: none; color: #F9B500; cursor: pointer;}
+.main-menu li:hover, .autosuggest-item:hover { text-decoration: none; color: #F9B500; cursor: pointer;}
 
 b{ font-weight: 700; }
 
@@ -220,7 +241,7 @@ header:after{ content:''; clear: both; }
 
 header .logo{ float: left; height: 24px; margin: 28px 0; }
 
-header .logo img{ height: 100%; width: auto; }
+header .logo b{ font-size: 20px;}
 
 
 header .main-menu{ float: right; }
@@ -347,7 +368,12 @@ header .main-menu li.drop-down a.mouseover + ul.drop-down-menu{ display: block;
 
 @media only screen and (max-width: 575px) {
 
-	header ul.main-menu > li{ padding: 15px; }
+	header ul.main-menu > li{ padding: 15px; line-height: 20px;}
+
+	.container {
+		margin-bottom: 5px;
+		margin-top: 5px;
+	}
 	
 	
 	/* HAMBURGER ICON */

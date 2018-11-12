@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<title>Newsbit</title>
+	<title>NewsPolina</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 	<!-- Font -->
 	<link href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded:400,600,700" rel="stylesheet">
 	<!-- Stylesheets -->
@@ -15,7 +16,7 @@
 <body>	
 	<header>
 		<div class="container">
-			<a class="logo" href="index.html"><img src="images/logo-black.png" alt="Logo"></a>
+			<a class="logo" href="index.html"><b>NEWS<span class="yellow">POLINA</span></b></a>
 			
 			<a class="right-area src-btn" href="#" >
 				<i class="active src-icn ion-search"></i>
@@ -26,9 +27,8 @@
 					<input class="search-input" type="text" placeholder="Search here">
 					<button class="search-submit" type="submit"><i class="ion-search"></i></a></button>
                 </form>
-			</div><!-- src-form -->
-            <section class="autosuggest">CONTENT</section>
-			
+			</div>
+            <section class="autosuggest hidden">CONTENT</section>			
 			<a class="menu-nav-icon" data-menu="#main-menu" href="#"><i class="ion-navicon"></i></a>		
 			<ul class="main-menu" id="main-menu">
 				<li><b>ALL NEWS</b></li>
@@ -40,10 +40,10 @@
                 <li data-name= "technology">TECHNOLOGY</li>
 			</ul>
 			<div class="clearfix"></div>
-        </div><!-- container -->
+        </div>
         <div class="container">
             <form class="settings">
-                <div class="center">
+                <div class="center hidden">
                 Show only top headlines
                     <input checked type="checkbox" id="cbx" style="display:none" />
                     <label for="cbx" class="toggle"><span></span></label>
@@ -56,7 +56,7 @@
         </div>
 	</header>
 	<div class="container" id="main-content">
-	</div><!-- container -->
+	</div>
 	<!-- SCIPTS -->
 	<script src="plugin-frameworks/jquery-3.2.1.min.js"></script>
 	<script src="plugin-frameworks/tether.min.js"></script>
