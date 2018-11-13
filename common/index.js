@@ -19,6 +19,20 @@ const searchInput = document.querySelector('.search-input');
 const searchSubmit = document.querySelector('.search-submit');
 const searchForm = document.querySelector('.src-form');
 const searchButton = document.querySelector('.src-btn');
+const srcIcn = document.querySelector('.src-icn');
+const closeIcn = document.querySelector('.close-icn');
+const menuIcon = document.querySelector('.menu-nav-icon');
+
+searchButton.addEventListener('click', () => {
+    srcIcn.classList.toggle('active');
+    closeIcn.classList.toggle('active');
+    searchForm.classList.toggle('active');
+});
+
+menuIcon.addEventListener('click', () => {
+    const mainMenu = menuIcon.dataset.menu;
+    document.querySelector(mainMenu).classList.toggle('visible-menu');
+})
 
 searchInput.addEventListener('input', (event) => {
     const searchedSourcesNames = sourcesNames
