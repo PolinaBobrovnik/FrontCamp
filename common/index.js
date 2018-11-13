@@ -160,7 +160,8 @@ const createArticles = (articles) => {
     articles.forEach(element => {
         const newArticle = document.createElement('div');
         newArticle.classList.add('article');
-        newArticle.innerHTML = `<div class="title-post post pr-5 pr-sm-0 pt-5 float-left float-sm-none pos-relative w-1-3 w-sm-100 h-sm-300x"><a class="pos-relative h-100 dplay-block" target="_blank" href = "${element.url}">
+        newArticle.innerHTML = `<div class="post float-left float-sm-none pos-relative">
+            <a class="pos-relative h-100 dplay-block" target="_blank" href = "${element.url}">
                 <div class="img-bg bg-4 bg-grad-layer-6" style="background-image: url(${element.urlToImage})"></div>
                 <div class="abs-blr color-white p-20 bg-sm-color-7">
                     <h4 class="mb-10 mb-sm-5"><b>${element.title}</b></h4>
@@ -169,8 +170,8 @@ const createArticles = (articles) => {
                         <li><i class="color-primary mr-5 font-12 ion-ios-bolt"></i>${element.source.name}</li>
                     </ul>
                 </div>
-                    </a>
-                    </div>`;
+            </a>
+        </div>`;
     mainContent.appendChild(newArticle);  
     });
     const clearfix = document.createElement('div');
