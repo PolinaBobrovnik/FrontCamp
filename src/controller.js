@@ -1,7 +1,7 @@
 // controller.js
 
-import fetchJSON from './util';
-import apiKey from './constants';
+import { fetchJSON } from './util';
+import API_KEY from './constants';
 
 export default class Controller {
   constructor(model, view) {
@@ -71,7 +71,7 @@ export default class Controller {
     this.view.showTopHeadlinesFilter(Boolean(q));
     const search = top ? 'top-headlines' : 'everything';
     const queryMap = {
-      apiKey,
+      apiKey: API_KEY,
       category: category && !publisher ? category : '',
       country: top && !publisher ? country : '',
       sources: publisher || '',
@@ -92,7 +92,7 @@ export default class Controller {
   }
 
   requestSources() {
-    fetchJSON(`https://newsapi.org/v2/sources?apiKey=${apiKey}`)
+    fetchJSON(`https://newsapi.org/v2/sources?apiKey=${API_KEY}`)
       .then(data => data.sources.forEach((source) => {
         this.model.setSourcesName(source);
       }));
