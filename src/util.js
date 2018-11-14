@@ -1,7 +1,9 @@
 // util.js
 
-const $on = (target, event, handler) => {
-  return target.addEventListener(event, handler);
+const $on = (target, event, handler) => target.addEventListener(event, handler);
+
+const preventDefault = (event) => {
+  event.preventDefault();
 };
 
-export { $on };
+export { $on, preventDefault };

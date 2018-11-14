@@ -1,7 +1,8 @@
 // view.js
 
-import { article, clearfix, noData, newSourceName } from './template';
-import { $on } from './util';
+import {
+  article, clearfix, noData, newSourceName,
+} from './template';
 
 export default class View {
   constructor() {
@@ -21,50 +22,56 @@ export default class View {
     this.cbx = document.querySelector('#cbx');
     this.toggle = document.querySelector('.toggle');
     this.numberInput = document.querySelector('#number');
-  };
-  render() {
-  };
+  }
+
   createArticles(articles) {
     while (this.mainContent.firstChild) {
       this.mainContent.removeChild(this.mainContent.firstChild);
     }
     this.numberInput.value = articles.length;
-    settingOfRequest.numberOfRecords = articles.length;
-    articles.forEach(element => {
+    articles.forEach((element) => {
       this.mainContent.appendChild(article(element));
     });
     this.mainContent.appendChild(clearfix());
-  };
+  }
+
   showTopHeadlinesFilter(isShown) {
-    isShown ? this.topHeadlinesFilter.classList.remove("hidden") :
-              this.topHeadlinesFilter.classList.add("hidden");
-  };
+    if (isShown) {
+      this.topHeadlinesFilter.classList.remove('hidden');
+    } else {
+      this.topHeadlinesFilter.classList.add('hidden');
+    }
+  }
+
   createAutosuggest(sourceNames) {
     while (this.autosuggest.firstChild) {
-      this.autosuggest.removeChild(autosuggest.firstChild);
+      this.autosuggest.removeChild(this.autosuggest.firstChild);
     }
 
-    if (sourceNames.length === 0) {     
+    if (sourceNames.length === 0) {
       this.autosuggest.appendChild(noData());
     } else {
-      sourceNames.forEach(sourceName => {
-        autosuggest.appendChild(newSourceName(sourceName));
+      sourceNames.forEach((sourceName) => {
+        this.autosuggest.appendChild(newSourceName(sourceName));
       });
     }
     this.autosuggest.style.bottom = `-${this.autosuggest.clientHeight}px`;
-    this.autosuggest.classList.remove("hidden");
-  };
+    this.autosuggest.classList.remove('hidden');
+  }
+
   toggleSearchButton() {
     this.srcIcn.classList.toggle('active');
     this.closeIcn.classList.toggle('active');
     this.searchForm.classList.toggle('active');
-  };
+  }
+
   onSearchInputSubmit() {
     this.searchButton.click();
-    this.autosuggest.classList.add("hidden");
-  };
+    this.autosuggest.classList.add('hidden');
+  }
+
   toggleMenu() {
-    const mainMenu = menuIcon.dataset.menu;
+    const mainMenu = this.menuIcon.dataset.menu;
     document.querySelector(mainMenu).classList.toggle('visible-menu');
-  };
+  }
 }
