@@ -1,4 +1,8 @@
 // controller.js
+
+import fetchJSON from './util';
+import apiKey from './constants';
+
 export default class Controller {
   constructor(model, view) {
     this.model = model;
@@ -67,7 +71,7 @@ export default class Controller {
     this.view.showTopHeadlinesFilter(Boolean(q));
     const search = top ? 'top-headlines' : 'everything';
     const queryMap = {
-      apiKey: '2a878fc593044fdba0c5153f9a2a46e7',
+      apiKey,
       category: category && !publisher ? category : '',
       country: top && !publisher ? country : '',
       sources: publisher || '',
@@ -81,19 +85,15 @@ export default class Controller {
 
     const url = `https://newsapi.org/v2/${search}?${query}`;
     const req = new Request(url);
-    fetch(req)
-      .then(response => response.json())
-      .then((result) => {
-        this.view.createArticles(result.articles);
-        this.model.setNumberOfRecords(result.articles.length);
-      });
+    fetchJSON(req).then((result) => {
+      this.view.createArticles(result.articles);
+      this.model.setNumberOfRecords(result.articles.length);
+    });
   }
 
   requestSources() {
-    fetch('https://newsapi.org/v2/sources?apiKey=2a878fc593044fdba0c5153f9a2a46e7')
-      .then(res => res.json())
-      .then(data => data.sources)
-      .then(sources => sources.forEach((source) => {
+    fetchJSON(`https://newsapi.org/v2/sources?apiKey=${apiKey}`)
+      .then(data => data.sources.forEach((source) => {
         this.model.setSourcesName(source);
       }));
   }

@@ -6,4 +6,6 @@ const preventDefault = (event) => {
   event.preventDefault();
 };
 
-export { $on, preventDefault };
+const fetchJSON = url => fetch(url).then(res => res.json());
+
+export { $on, preventDefault, fetchJSON };
