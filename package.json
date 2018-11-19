@@ -36,9 +36,11 @@
     "babelify": "7.3.0",
     "bootstrap": "4.0.0-alpha.6",
     "browserify": "13.0.1",
+    "es6-promise": "^4.2.5",
     "gulp": "3.9.1",
     "gulp-eslint": "^5.0.0",
     "gulp-minify-css": "1.2.4",
+    "isomorphic-fetch": "^2.2.1",
     "moment": "^2.13.0",
     "vinyl-source-stream": "1.1.0"
   }

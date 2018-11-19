@@ -7,6 +7,15 @@ export default class Controller {
   constructor(model, view) {
     this.model = model;
     this.view = view;
+
+    view.bindSelectCategory(this.selectCategory.bind(this));
+    view.bindToggleTopHeadlines(this.toggleTopHeadlines.bind(this));
+    view.bindOnNumberInputChange(this.onNumberInputChange.bind(this));
+    view.bindToggleSearchButton(this.toggleSearchButton.bind(this));
+    view.bindToggleMenu(this.toggleMenu.bind(this));
+    view.bindOnSearchInputChange(this.onSearchInputChange.bind(this));
+    view.bindOnSearchInputSubmit(this.onSearchInputSubmit.bind(this));
+    view.bindSelectPublisher(this.selectPublisher.bind(this));
   }
 
   selectCategory(event) {
@@ -84,8 +93,7 @@ export default class Controller {
       .join('&');
 
     const url = `https://newsapi.org/v2/${search}?${query}`;
-    const req = new Request(url);
-    fetchJSON(req).then((result) => {
+    fetchJSON(url).then((result) => {
       this.view.createArticles(result.articles);
       this.model.setNumberOfRecords(result.articles.length);
     });

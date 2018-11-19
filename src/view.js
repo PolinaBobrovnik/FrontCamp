@@ -3,12 +3,14 @@
 import {
   article, clearfix, noData, newSourceName,
 } from './template';
+import { $on, preventDefault } from './util';
 
 export default class View {
   constructor() {
     this.el = document.getElementById('target');
     this.searchInput = document.querySelector('.search-input');
     this.searchSubmit = document.querySelector('.search-submit');
+    this.search = document.querySelector('.search');
     this.searchForm = document.querySelector('.src-form');
     this.searchButton = document.querySelector('.src-btn');
     this.srcIcn = document.querySelector('.src-icn');
@@ -22,6 +24,45 @@ export default class View {
     this.cbx = document.querySelector('#cbx');
     this.toggle = document.querySelector('.toggle');
     this.numberInput = document.querySelector('#number');
+    this.preventDefaultForSubmit();
+  }
+
+  bindSelectCategory(handler) {
+    $on(this.categories, 'click', handler);
+  }
+
+  preventDefaultForSubmit() {
+    $on(this.settings, 'submit', preventDefault);
+    $on(this.search, 'submit', preventDefault);
+  }
+
+  bindToggleTopHeadlines(handler) {
+    $on(this.toggle, 'click', handler);
+  }
+
+  bindOnNumberInputChange(handler) {
+    $on(this.numberInput, 'blur', handler);
+    $on(this.numberInput, 'keypress', handler);
+  }
+
+  bindToggleSearchButton(handler) {
+    $on(this.searchButton, 'click', handler);
+  }
+
+  bindToggleMenu(handler) {
+    $on(this.menuIcon, 'click', handler);
+  }
+
+  bindOnSearchInputChange(handler) {
+    $on(this.searchInput, 'input', handler);
+  }
+
+  bindOnSearchInputSubmit(handler) {
+    $on(this.searchSubmit, 'click', handler);
+  }
+
+  bindSelectPublisher(handler) {
+    $on(this.autosuggest, 'click', handler);
   }
 
   createArticles(articles) {
