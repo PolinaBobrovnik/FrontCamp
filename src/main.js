@@ -3,9 +3,12 @@
 import View from './view';
 import Model from './model';
 import Controller from './controller';
+import { $on } from './util';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
+require('babel-register');
+require('babel-polyfill');
 
 class App {
   constructor() {
@@ -13,12 +16,6 @@ class App {
     const view = new View();
     this.controller = new Controller(model, view);
   }
-
-  init() {
-    this.controller.requestData({});
-    this.controller.requestSources();
-  }
 }
 
-const app = new App();
-app.init();
+$on(window, 'load', new App());
