@@ -6,6 +6,13 @@ const preventDefault = (event) => {
   event.preventDefault();
 };
 
-const fetchJSON = url => fetch(url).then(res => res.json());
+async function request(url) {
+  return fetch(url);
+}
+
+async function fetchJSON(url) {
+  const res = await request(url);
+  return res.json();
+}
 
 export { $on, preventDefault, fetchJSON };

@@ -1,32 +1,42 @@
 // controller.js
 
-import { fetchJSON } from './util';
-import API_KEY from './constants';
-
 export default class Controller {
   constructor(model, view) {
     this.model = model;
     this.view = view;
+
+    view.bindSelectCategory(this.selectCategory.bind(this));
+    view.bindToggleTopHeadlines(this.toggleTopHeadlines.bind(this));
+    view.bindOnNumberInputChange(this.onNumberInputChange.bind(this));
+    view.bindToggleSearchButton(this.toggleSearchButton.bind(this));
+    view.bindToggleMenu(this.toggleMenu.bind(this));
+    view.bindOnSearchInputChange(this.onSearchInputChange.bind(this));
+    view.bindOnSearchInputSubmit(this.onSearchInputSubmit.bind(this));
+    view.bindSelectPublisher(this.selectPublisher.bind(this));
+
+    this.updateArticles = this.updateArticles.bind(this);
+    this.model.requestData({}, this.updateArticles);
+    this.model.requestSources();
   }
 
   selectCategory(event) {
     const category = event.target.dataset.name;
     this.model.setCategory(category);
-    this.requestData({
+    this.model.requestData({
       category: this.model.category,
       numberOfRecords: this.model.numberOfRecords,
-    });
+    }, this.updateArticles);
   }
 
   toggleTopHeadlines() {
     this.model.setTop(!this.view.cbx.checked);
-    this.requestData(this.model.getModel());
+    this.model.requestData(this.model.getModel(), this.updateArticles);
   }
 
   onNumberInputChange(event) {
     if (!event.keyCode || (event.keyCode && event.keyCode === 13)) {
       this.model.setNumberOfRecords(event.target.value);
-      this.requestData(this.model.getModel());
+      this.model.requestData(this.model.getModel(), this.updateArticles);
     }
   }
 
@@ -41,7 +51,7 @@ export default class Controller {
   onSearchInputChange(event) {
     const searchedSourcesNames = this.model.sourcesNames
       .filter(sourceName => sourceName.toLowerCase()
-        .indexOf(event.target.value.toLowerCase()) === 0);
+        .includes(event.target.value.toLowerCase()));
     this.view.createAutosuggest(searchedSourcesNames);
   }
 
@@ -49,7 +59,8 @@ export default class Controller {
     if (!event.keyCode || (event.keyCode && event.keyCode === 13)) {
       this.view.onSearchInputSubmit();
       this.model.setQ(this.view.searchInput.value);
-      this.requestData({ q: this.model.q, numberOfRecords: this.model.numberOfRecords });
+      this.model.requestData({ q: this.model.q, numberOfRecords: this.model.numberOfRecords },
+        this.updateArticles);
     }
   }
 
@@ -58,43 +69,15 @@ export default class Controller {
     if (source) {
       this.view.onSearchInputSubmit();
       this.model.setSourceId(source);
-      this.requestData({
+      this.model.requestData({
         publisher: this.model.sourceId,
         numberOfRecords: this.model.numberOfRecords,
-      });
+      }, this.updateArticles);
     }
   }
 
-  requestData({
-    top = true, category, country = 'us', numberOfRecords, publisher, q,
-  }) {
+  updateArticles(q, result) {
     this.view.showTopHeadlinesFilter(Boolean(q));
-    const search = top ? 'top-headlines' : 'everything';
-    const queryMap = {
-      apiKey: API_KEY,
-      category: category && !publisher ? category : '',
-      country: top && !publisher ? country : '',
-      sources: publisher || '',
-      pageSize: numberOfRecords || '',
-      q: q || '',
-    };
-    const query = Object.keys(queryMap)
-      .filter(key => queryMap[key])
-      .map(key => `${key}=${queryMap[key]}`)
-      .join('&');
-
-    const url = `https://newsapi.org/v2/${search}?${query}`;
-    const req = new Request(url);
-    fetchJSON(req).then((result) => {
-      this.view.createArticles(result.articles);
-      this.model.setNumberOfRecords(result.articles.length);
-    });
-  }
-
-  requestSources() {
-    fetchJSON(`https://newsapi.org/v2/sources?apiKey=${API_KEY}`)
-      .then(data => data.sources.forEach((source) => {
-        this.model.setSourcesName(source);
-      }));
+    this.view.createArticles(result.articles);
   }
 }
