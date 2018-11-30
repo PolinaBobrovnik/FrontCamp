@@ -1,12 +1,19 @@
 {
     "presets": [
-    "es2015",
-    "stage-0"
-  ],
-  "plugins": [
-    ["transform-runtime", {
-      "polyfill": false,
-      "regenerator": true
-    }]
-  ]
+        [
+            "@babel/preset-env",
+            {
+                "targets": {
+                    "browsers": [
+                        "last 2 versions"
+                    ]
+                },
+                "useBuiltIns": "usage"
+            }
+        ]
+    ],
+    "plugins": [
+        "syntax-dynamic-import",
+        "@babel/transform-runtime"
+    ]
 }
