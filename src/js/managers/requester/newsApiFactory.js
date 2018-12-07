@@ -1,6 +1,7 @@
 import { fetchJSON } from '../../utils/util';
+import proxyLogger from '../logger/proxyLogger';
 
-export default function newsApiFactory(method) {
+const newsApiFactory = (method) => {
   switch (method) {
     case 'GET':
       return {
@@ -39,4 +40,6 @@ export default function newsApiFactory(method) {
         },
       };
   }
-}
+};
+
+export default proxyLogger(newsApiFactory);

@@ -1,10 +1,11 @@
 const handler = {
-  get: (target, prop) => (...args) => {
+  apply(target, thisArg, argumentsList) {
     // eslint-disable-next-line no-console
-    console.log(`Call "${prop}" with ${JSON.stringify(args)}`);
-    return target[prop](...args);
+    console.log(`Call "${target.name}" with ${argumentsList}`);
+    return target(...argumentsList);
   },
 };
+
 
 export default function proxyLogger(target) {
   return new Proxy(target, handler);

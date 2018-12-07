@@ -2,7 +2,6 @@
 
 import API_KEY from '../constants/constants';
 import newsApiFactory from '../managers/requester/newsApiFactory';
-import proxyLogger from '../managers/logger/proxyLogger';
 
 export default class Model {
   constructor() {
@@ -71,7 +70,7 @@ export default class Model {
 
     const url = `https://newsapi.org/v2/${search}?${query}`;
     try {
-      const result = await proxyLogger(this.getResult.execute(url));
+      const result = await this.getResult.execute(url);
       this.setNumberOfRecords(result.articles.length);
       if (result.articles.length) {
         if (callback) {
