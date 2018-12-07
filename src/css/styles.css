@@ -21,6 +21,14 @@ h4{ font-size: 1.3em; }
 h5{ font-size: 1.1em; }
 h6{ font-size: .85em; }
 
+.error-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  z-index: 1100;
+}
+
 .hvr-sweep-to-top {
 	display: inline-block;
 	vertical-align: middle;
@@ -74,7 +82,7 @@ h6{ font-size: .85em; }
 	z-index: 2;
 	overflow: auto;
 }
-.autosuggest.hidden, .center.hidden {
+.autosuggest.hidden, .center.hidden, .error-popup.hidden {
 	visibility: hidden;
 }
 

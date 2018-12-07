@@ -11,8 +11,13 @@ async function request(url) {
 }
 
 async function fetchJSON(url) {
-  const res = await request(url);
-  return res.json();
+  try {
+    const res = await request(url);
+    return res.json();
+  } catch (e) {
+    this.showErrorPopup('Connection Error!');
+    return [];
+  }
 }
 
 export { $on, preventDefault, fetchJSON };

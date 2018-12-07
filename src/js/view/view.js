@@ -3,7 +3,7 @@
 import {
   article, clearfix, noData, newSourceName,
 } from './template';
-import { $on, preventDefault } from './util';
+import { $on, preventDefault } from '../utils/util';
 
 export default class View {
   constructor() {

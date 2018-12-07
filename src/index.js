@@ -7,10 +7,10 @@ import './images/favicon.ico';
 import 'whatwg-fetch';
 import 'es6-promise';
 
-import View from './js/view';
-import Model from './js/model';
-import Controller from './js/controller';
-import { $on } from './js/util';
+import View from './js/view/view';
+import Model from './js/model/model';
+import Controller from './js/controller/controller';
+import { $on } from './js/utils/util';
 
 class App {
   constructor() {

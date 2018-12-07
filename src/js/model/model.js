@@ -1,10 +1,12 @@
 // model.js
 
-import { fetchJSON } from './util';
-import API_KEY from './constants';
+import API_KEY from '../constants/constants';
+import newsApiFactory from '../managers/requester/newsApiFactory';
+import proxyLogger from '../managers/logger/proxyLogger';
 
 export default class Model {
   constructor() {
+    this.getResult = newsApiFactory('GET');
     this.sourcesNameToId = new Map();
     this.sourcesNames = [];
     this.category = '';
@@ -68,17 +70,38 @@ export default class Model {
       .join('&');
 
     const url = `https://newsapi.org/v2/${search}?${query}`;
-    const result = await fetchJSON(url);
-    this.setNumberOfRecords(result.articles.length);
-    if (callback) {
-      callback(q, result);
+    try {
+      const result = await proxyLogger(this.getResult.execute(url));
+      this.setNumberOfRecords(result.articles.length);
+      if (result.articles.length) {
+        if (callback) {
+          callback(q, result);
+        }
+      } else {
+        this.showErrorPopup('No results!');
+      }
+    } catch (e) {
+      this.showErrorPopup('Connection Error!');
     }
   }
 
   async requestSources() {
-    const data = await fetchJSON(`https://newsapi.org/v2/sources?apiKey=${API_KEY}`);
-    data.sources.forEach((source) => {
-      this.setSourcesName(source);
-    });
+    try {
+      const data = await this.getResult.execute(`https://newsapi.org/v2/sources?apiKey=${API_KEY}`);
+      data.sources.forEach((source) => {
+        this.setSourcesName(source);
+      });
+    } catch (e) {
+      this.showErrorPopup('Connection Error!');
+    }
+  }
+
+  showErrorPopup(msg) {
+    import('../managers/error_handler/errorHandler.js')
+      .then((errorHandlerModule) => {
+        const ErrorPopup = errorHandlerModule.default;
+        this.errorPopup = new ErrorPopup();
+        this.errorPopup.showErrorPopup(msg);
+      });
   }
 }
