@@ -79,13 +79,20 @@
    [
      { $match : { originCountry : "United States" } },
      {
+			$group: {
+				_id: '$originCity',
+            totalPassengers: { $sum: "$passengers" },
+            originState: {$first: '$originState'}
+			}
+		},
+     {
        $group: {
            _id: "$originState",
            cities: { $addToSet: {
-                     city: "$originCity",
-                     totalPassengers: "$passengers",
+                     city: "$_id",
+                     totalPassengers: "$totalPassengers",
                    } },
-			maxPassengers: { $max : "$passengers" }
+			maxPassengers: { $max : "$totalPassengers" }
         }
      },
      { 
@@ -109,18 +116,18 @@
    ]
 )
    Result: 
-{ "totalPassengers" : 35021, "location" : { "state" : "Alabama", "city" : "Birmingham, AL" } }
-{ "totalPassengers" : 88556, "location" : { "state" : "Alaska", "city" : "Anchorage, AK" } }
-{ "totalPassengers" : 54071, "location" : { "state" : "Arizona", "city" : "Phoenix, AZ" } }
-{ "totalPassengers" : 24661, "location" : { "state" : "Arkansas", "city" : "Little Rock, AR" } }
-{ "totalPassengers" : 82575, "location" : { "state" : "California", "city" : "San Francisco, CA" } }
+{ "totalPassengers" : 760120, "location" : { "state" : "Alabama", "city" : "Birmingham, AL" } }
+{ "totalPassengers" : 1472404, "location" : { "state" : "Alaska", "city" : "Anchorage, AK" } }
+{ "totalPassengers" : 13152753, "location" : { "state" : "Arizona", "city" : "Phoenix, AZ" } }
+{ "totalPassengers" : 571452, "location" : { "state" : "Arkansas", "city" : "Little Rock, AR" } }
+{ "totalPassengers" : 23701556, "location" : { "state" : "California", "city" : "Los Angeles, CA" } }
 
 ***Enron Collection***
 
 Query: db.enron.aggregate(
 	[
 		{ $unwind: '$headers.To' },
-        {
+      {
 			$group: {
 				_id: '$_id',
                 recipient: {$addToSet: '$headers.To'},
