@@ -53,8 +53,7 @@
 
 4. Query: db.airlines.aggregate(
    [
-     { $match : { originCountry : "United States" } },
-     { $match : { $or: [ { destCountry: "Greece" }, { destCountry: "Italy" }, { destCountry: "Spain" } ] } },
+     { $match : { originCountry : "United States", destCountry: { $in: ["Greece", "Italy", "Spain"] } } },
      {
         $group : {
             _id : "$carrier",
